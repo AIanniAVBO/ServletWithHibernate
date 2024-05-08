@@ -11,6 +11,12 @@ import org.hibernate.service.ServiceRegistry;
 public class HibernateUtil {
 	private static SessionFactory sessionFactory;
 
+	private static String filePath = "sakila_master.db";
+	
+	public static void SetFilePath(String path) {
+		filePath = path;
+	}
+	
 	public static SessionFactory getSessionFactory() {
 		if (sessionFactory == null) {
 			try {
@@ -19,7 +25,7 @@ public class HibernateUtil {
 				// Hibernate settings equivalent to hibernate.cfg.xml's properties
 				Properties settings = new Properties();
 				settings.put(Environment.JAKARTA_JDBC_DRIVER, "org.sqlite.JDBC");
-				settings.put(Environment.JAKARTA_JDBC_URL, "jdbc:sqlite:sakila_master.db");
+				settings.put(Environment.JAKARTA_JDBC_URL, "jdbc:sqlite:" + filePath);
 
 				settings.put(Environment.DIALECT, "org.hibernate.community.dialect.SQLiteDialect");
 
