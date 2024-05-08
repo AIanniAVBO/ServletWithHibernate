@@ -9,12 +9,12 @@ import jakarta.persistence.criteria.*;
 
 public class FilmDao {
 	/**
-	 * Get User By ID
+	 * Get Film By ID
 	 * 
 	 * @param id
 	 * @return
 	 */
-	public Film getUser(int id) {
+	public Film getFilm(int id) {
 
 		Transaction transaction = null;
 		Film user = null;
@@ -35,11 +35,11 @@ public class FilmDao {
 	}
 
 	/**
-	 * Get all Users
+	 * Get all Films
 	 * 
 	 * @return
 	 */
-	public List<Film> getAllUser() {
+	public List<Film> getAllFilms() {
 
 		Transaction transaction = null;
 		List<Film> listOfUser = null;
