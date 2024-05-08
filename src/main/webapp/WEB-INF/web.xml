@@ -4,4 +4,14 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>FilmServlet</servlet-name>
+  	<display-name>FilmServlet</display-name>
+  	<description></description>
+  	<servlet-class>org.avbo.tpsit.servletwithhibernate.FilmServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>FilmServlet</servlet-name>
+  	<url-pattern>/FilmServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
