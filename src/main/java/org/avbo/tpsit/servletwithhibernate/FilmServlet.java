@@ -3,6 +3,8 @@ package org.avbo.tpsit.servletwithhibernate;
 import java.io.File;
 import java.io.IOException;
 
+import com.google.gson.Gson;
+
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -48,7 +50,9 @@ public class FilmServlet extends HttpServlet {
 			Film film = dao.getFilm(film_id);
 			
 			if (film != null) {
-				response.getWriter().append(film.getTitle() + ": ").append(request.getContextPath());
+				Gson gson = new Gson();
+				response.getWriter().append(gson.toJson(film));
+				response.setContentType("application/json");
 			}
 			else {
 				response.getWriter().append("Film non trovato");

@@ -8,11 +8,11 @@ public class Film {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="film_id", nullable=false)
-	private int filmID;
+	public int filmID;
     @Column(name="title", nullable=false)
-	private String title;
+    public String title;
     @Column(name="description")
-	private String description;
+    public String description;
     
     public Film()
     {
