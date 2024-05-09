@@ -19,36 +19,55 @@ public class FilmServlet extends HttpServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		//Ottiene il context della servlet
-	    ServletContext context = config.getServletContext();
-	    //Ottiene il percorso in cui è stato spostato il file
-	    File f = new File(context.getRealPath("sakila_master.db"));
-	    //Aggiorna il percorso del database prima che il file venga aperto
-	    HibernateUtil.SetFilePath(f.getPath());
+		// Ottiene il context della servlet
+		ServletContext context = config.getServletContext();
+		// Ottiene il percorso in cui è stato spostato il file
+		File f = new File(context.getRealPath("sakila_master.db"));
+		// Aggiorna il percorso del database prima che il file venga aperto
+		HibernateUtil.SetFilePath(f.getPath());
 	}
-	
-    /**
-     * Default constructor. 
-     */
-    public FilmServlet() {
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * Default constructor.
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public FilmServlet() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		FilmDao dao = new FilmDao();
-		Film film = dao.getFilm(9);
-		
-		response.getWriter().append(film.getTitle() + ": ").append(request.getContextPath());
+
+		if (request.getParameter("id_film") != null) {
+			int film_id = Integer.parseInt(request.getParameter("id_film"));
+			Film film = dao.getFilm(film_id);
+			
+			if (film != null) {
+				response.getWriter().append(film.getTitle() + ": ").append(request.getContextPath());
+			}
+			else {
+				response.getWriter().append("Film non trovato");
+				response.setStatus(404);
+			}
+				
+		}
+		else {
+			response.getWriter().append("Nessun id del film richiesto");
+			response.setStatus(400);
+		}
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
