@@ -42,27 +42,80 @@ public class FilmServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
+		switch (request.getServletPath()) {
+		case "/GetFilm":
+			GetFilm(request, response);
+			break;
+		case "/DeleteFilm":
+			DeleteFilm(request, response);
+			break;
+		case "/GetAllFilms":
+			GetAllFilms(request, response);
+			break;
+		default:
+			response.getWriter().append("Servizio non esistente");
+			response.setStatus(404);
+		}
+
+	}
+
+	protected void DeleteFilm(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		FilmDao dao = new FilmDao();
+
+		if (request.getParameter("id_film") != null) {
+			int film_id = Integer.parseInt(request.getParameter("id_film"));
+
+			if (dao.deleteFilm(film_id)) {
+				response.getWriter().append("Film eliminato");
+			} else {
+				response.getWriter().append("Film non trovato");
+				response.setStatus(404);
+			}
+
+		} else {
+			response.getWriter().append("Nessun id del film richiesto");
+			response.setStatus(400);
+		}
+	}
+
+	protected void GetFilm(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		FilmDao dao = new FilmDao();
 
 		if (request.getParameter("id_film") != null) {
 			int film_id = Integer.parseInt(request.getParameter("id_film"));
 			Film film = dao.getFilm(film_id);
-			
+
 			if (film != null) {
 				Gson gson = new Gson();
 				response.getWriter().append(gson.toJson(film));
 				response.setContentType("application/json");
-			}
-			else {
+			} else {
 				response.getWriter().append("Film non trovato");
 				response.setStatus(404);
 			}
-				
-		}
-		else {
+
+		} else {
 			response.getWriter().append("Nessun id del film richiesto");
 			response.setStatus(400);
+		}
+	}
+
+	protected void GetAllFilms(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		FilmDao dao = new FilmDao();
+
+		var films = dao.getAllFilms();
+
+		if (films != null) {
+			Gson gson = new Gson();
+			response.getWriter().append(gson.toJson(films));
+			response.setContentType("application/json");
+		} else {
+			response.getWriter().append("Nessun film non trovato");
+			response.setStatus(404);
 		}
 	}
 

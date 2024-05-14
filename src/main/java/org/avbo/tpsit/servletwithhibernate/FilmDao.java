@@ -35,6 +35,37 @@ public class FilmDao {
 	}
 
 	/**
+	 * Delete User
+	 * 
+	 * @param id
+	 */
+	public Boolean deleteFilm(int id) {
+
+		Transaction transaction = null;
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			// start a transaction
+			transaction = session.beginTransaction();
+
+			// Delete a user object
+			Film film = session.get(Film.class, id);
+			if (film != null) {
+				session.remove(film);
+				System.out.println("user is deleted");
+				return true;
+			}
+
+			// commit transaction
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	/**
 	 * Get all Films
 	 * 
 	 * @return

@@ -12,6 +12,14 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>FilmServlet</servlet-name>
-  	<url-pattern>/FilmServlet</url-pattern>
+  	<url-pattern>/GetFilm</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>FilmServlet</servlet-name>
+  	<url-pattern>/GetAllFilms</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>FilmServlet</servlet-name>
+  	<url-pattern>/DeleteFilm</url-pattern>
   </servlet-mapping>
 </web-app>
